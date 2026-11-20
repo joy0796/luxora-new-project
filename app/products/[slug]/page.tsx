@@ -1,0 +1,3 @@
+import Image from "next/image";import Link from "next/link";import {notFound} from "next/navigation";import {products,getProduct} from "@/lib/data";import {ProductClient} from "@/components/product-client";
+export function generateStaticParams(){return products.map(p=>({slug:p.slug}))}
+export default async function Product({params}:{params:Promise<{slug:string}>}){const{slug}=await params;const p=getProduct(slug);if(!p)notFound();return <main><div className="container py-7"><div className="mb-7 text-[9px] uppercase tracking-[.12em] text-muted"><Link href="/">Home</Link> / <Link href={`/collections/${p.categorySlug}`}>{p.category}</Link> / {p.name}</div><ProductClient product={p}/></div></main>}
